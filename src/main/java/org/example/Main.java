@@ -1,44 +1,43 @@
 package org.example;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
-        ProductRepository repository = new ProductRepository();
 
-        // Beispiel Builder
-        Product product1 = Product.builder()
-                .id("12")
-                .name("Product 1")
-                .price(999)
-                .category("Cat 1")
+        Student student1 = new Student("1", "Max", "Bahnhofsweg 4", 2);
+        Student student2 = Student.builder()
+                .id("2")
+                .name("Hannah")
+                .address("Goethe Str. 13")
+                .grade(1)
                 .build();
 
 
-        Product product2 = new Product();
-        product2.setId("12341");
-        product2.setName("Product 2");
-        product2.setPrice(299);
-        product2.setCategory("Category 2");
-        product2.setRating(3);
+        Teacher teacher1 = new Teacher("123", "Mr. Smith", "Math");
+        Teacher teacher2 = Teacher.builder()
+                .id("456")
+                .name("Mrs. Smith")
+                .subject("English")
+                .build();
 
-        repository.saveProduct(product1);
-        repository.saveProduct(product2);
+        Teacher teacher3 = teacher1.withSubject("German");
+        System.out.println(teacher3);
 
+        List<Student> students = new ArrayList<>();
+        students.add(student1);
+        students.add(student2);
 
-        List<Product> products = repository.findAll();
-        for (Product product : products) {
-            System.out.println(product);
-        }
+        Course course = new Course("1001", "Mathematics 101", teacher1, students);
+        Course course1 = Course.builder()
+                .id("2002")
+                .name("ffm-java-23-1")
+                .teacher(teacher2)
+                .students(students)
+                .build();
 
-
-        int minRating = 4;
-        List<Product> highRatedProducts = repository.findByMinRating(minRating);
-
-        System.out.println("Produkte mit einer Mindestbewertung von " + minRating + ":");
-        for (Product product : highRatedProducts) {
-            System.out.println(product);
-        }
+        System.out.println(course);
+        System.out.println(course1);
     }
-
 }
